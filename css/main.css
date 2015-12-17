@@ -1,0 +1,40 @@
+.card-selector {
+    background-color: #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.card-selector-inner {
+    width: 300px;
+    position: absolute;
+    right: 0;
+}
+
+.card-selector ul li {
+    margin: 20px 0;
+}
+
+.card-container {
+    
+}
+
+h1 {
+    margin-top: 0;
+}
+
+p {
+    line-height: 36px;
+    margin: 0;
+}
+
+.card-container .card {
+    padding: 10px 0;
+}
+
+.card-container .card-inner {
+/*    margin: 10px  0;
+    padding: 10px;
+*/    background-color: #bada55;
+    padding: 10px;
+}
