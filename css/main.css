@@ -29,12 +29,22 @@ p {
 }
 
 .card-container .card {
-    padding: 10px 0;
+    /*padding: 10px 0;*/
 }
 
 .card-container .card-inner {
 /*    margin: 10px  0;
     padding: 10px;
 */    background-color: #bada55;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
 }
+
+/*ul.list-unstyled,
+ul.list-unstyled li {
+    margin:0;
+    padding:0;
+}*/
+

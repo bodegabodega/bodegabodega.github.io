@@ -8,39 +8,66 @@ jQuery(document).ready(function($) {
 	var init = function() {
 		setTimeout(resizeSidebar, 10);
 
-		// return;
+		//return;
 
 		$('.card-container .card').each(function(index, item) {
-			$(item).data('orig-height', $(item).outerHeight(true));
-			TweenMax.to(item, 0, {
-				opacity: 0,
-				height: 0
+			var card = $(item);
+			var cardInner = card.find('.card-inner');
+			card.data('orig-height', $(item).outerHeight(true));
+
+			// return;
+
+			TweenLite.to(cardInner, 0, {
+				opacity: 0
 			});
-			//$(item).hide();
+			TweenLite.to(card, 0, {
+				height: 0,
+				onComplete: function() {
+					card.hide();
+				}
+			});
+			
 		});
 
 		$('.card-selector :checkbox').change(function(event) {
 			var cb = event.currentTarget;
 			var n = $(cb).data('cardName');
 			var card = $('.card-container .card.' + n);
-			
-			console.log(n + ' is checked ' + cb.checked);
-			console.log('Destination scroll position ' +  windest);
+			var cardInner = card.find('.card-inner');
+			var oHeight = card.data('orig-height');
 
 			if (cb.checked) {
-				//card.show();
-				var windest = card.offset().top - 10;
+				card.show();
+				var windest = card.offset().top - 50;
 
-				console.log(card.data('orig-height'));
+				var tl = new TimelineLite();
+				tl.to( card, .5, {
+					height: oHeight,
+					ease:Power1.easeInOut
+				}).to(cardInner, .35, {
+					delay: .35,
+					opacity: 1,
+					ease:Power1.easeIn
+				});
 
-				TweenMax.to(window, 1, {scrollTo:{y:windest}, ease:Power2.easeInOut});
-				TweenMax.to(card, 1, {height:card.data('orig-height')});
-				TweenMax.to(card, 1, {opacity: 1, delay: 1});
-				//window.scrollTo(0, windest);
+				TweenMax.to(window, .5, {
+					scrollTo: {
+						y:windest
+					}, ease:Power1.easeInOut
+				});
 			} else {
 				//card.hide();
+				TweenLite.to(cardInner, .35, {
+					opacity: 0
+				});
+				TweenLite.to(card, .35, {
+					height: 0,
+					delay: .35,
+					onComplete: function() {
+						card.hide();
+					}
+				});
 
-				TweenMax.to(card, 1, {opacity:0, height: 0});
 			};
 		});
 	}

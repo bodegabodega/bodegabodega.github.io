@@ -1,0 +1,61 @@
+jQuery(document).ready(function($) {
+
+	var resizeSidebar = function() {
+		$('.card-selector').css('height', $(window).height());
+		$('.card-selector').css('width', $('.card-container').offset().left);
+	};
+
+	var init = function() {
+		setTimeout(resizeSidebar, 10);
+
+		//return;
+
+		$('.card-container .card').each(function(index, item) {
+			$(item).data('orig-height', $(item).outerHeight(true));
+			TweenMax.to(item, 0, {
+				opacity: 0,
+				scaleY: 0
+				//height: 0
+			});
+			$(item).hide();
+		});
+
+		$('.card-selector :checkbox').change(function(event) {
+			var cb = event.currentTarget;
+			var n = $(cb).data('cardName');
+			var card = $('.card-container .card.' + n);
+			
+			console.log(n + ' is checked ' + cb.checked);
+			console.log('Destination scroll position ' +  windest);
+
+			if (cb.checked) {
+				card.show();
+				var windest = card.offset().top - 10;
+
+				console.log(card.data('orig-height'));
+
+				TweenMax.to(window, 1, {scrollTo:{y:windest}, ease:Power2.easeInOut});
+				//TweenMax.to(card, 1, {height:card.data('orig-height')});
+				TweenMax.to(card, 1, {scaleY: 1})
+				TweenMax.to(card, 1, {opacity: 1, delay: 1});
+				//window.scrollTo(0, windest);
+			} else {
+				//card.hide();
+
+				TweenMax.to(card, 1, {
+					opacity: 0,
+					scaleY: 0,
+					onComplete: function() {
+						console.log(this);
+						$(this.target).hide();
+					}
+					//height: 0
+				});
+			};
+		});
+	}
+
+	$(window).resize(resizeSidebar);
+
+	init()
+});
